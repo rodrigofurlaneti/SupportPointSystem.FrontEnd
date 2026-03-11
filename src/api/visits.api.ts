@@ -3,15 +3,15 @@ import type { CheckinRequest, CheckoutRequest, VisitHistoryResponse } from '../s
 
 export const visitsApi = {
   checkin: async (data: CheckinRequest): Promise<void> => {
-    await apiClient.post('/visits/checkin', data);
+    await apiClient.post('api/visits/checkin', data);
   },
 
   checkout: async (data: CheckoutRequest): Promise<void> => {
-    await apiClient.post('/visits/checkout', data);
+    await apiClient.post('api/visits/checkout', data);
   },
 
   getHistory: async (params: { page: number; pageSize: number }): Promise<VisitHistoryResponse> => {
-    const res = await apiClient.get('/visits/history', { params });
+    const res = await apiClient.get('api/visits/history', { params });
     return res.data;
   },
 };

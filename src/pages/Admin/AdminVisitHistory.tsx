@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2, CheckCircle2, Clock, MapPin } from 'lucide-react';
-import { HeaderAdmin } from '../../../components/HeaderAdmin';
-import { useLogout } from '../../../hooks/useAuth';
-import { useVisitHistory } from '../../../hooks/useVisits';
+import { HeaderAdmin } from '../../components/HeaderAdmin';
+import { useLogout } from '../../hooks/useAuth';
+import { useVisitHistory } from '../../hooks/useVisits';
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleString('pt-BR', {
