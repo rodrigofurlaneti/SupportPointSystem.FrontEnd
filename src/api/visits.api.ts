@@ -1,8 +1,9 @@
-import apiClient from './client';
+﻿import apiClient from './client';
 import type { CheckinRequest, CheckoutRequest, VisitHistoryResponse } from '../schemas/visit.schema';
 
 export const visitsApi = {
   checkin: async (data: CheckinRequest): Promise<void> => {
+    console.log("DADOS QUE ESTÃO SAINDO DO FRONT:", data);
     await apiClient.post('api/visits/checkin', data);
   },
 
