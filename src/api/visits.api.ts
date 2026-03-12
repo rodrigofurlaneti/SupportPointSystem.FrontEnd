@@ -11,8 +11,11 @@ export const visitsApi = {
     await apiClient.post('api/visits/checkout', data);
   },
 
-  getHistory: async (params: { page: number; pageSize: number }): Promise<VisitHistoryResponse> => {
-    const res = await apiClient.get('api/visits/history', { params });
-    return res.data;
-  },
+    getHistory: async (params: { page: number; pageSize: number; sellerId?: string }): Promise<VisitHistoryResponse> => {
+        const cleanParams = Object.fromEntries(
+            Object.entries(params).filter(([_, v]) => v !== undefined)
+        );
+        const res = await apiClient.get('api/visits/history', { params: cleanParams });
+        return res.data; 
+    },
 };

@@ -14,25 +14,22 @@ export const CheckoutRequestSchema = z.object({
 });
 
 export const VisitSummaryDtoSchema = z.object({
-  visitId: z.string().uuid(),
-  customerId: z.string().uuid(),
-  checkinLatitude: z.number(),
-  checkinLongitude: z.number(),
-  checkinDistanceMeters: z.number(),
-  checkinTimestamp: z.string().datetime(),
-  isOpen: z.boolean(),
-  checkoutTimestamp: z.string().datetime().nullable(),
-  durationMinutes: z.number().nullable(),
-  checkoutSummary: z.string().nullable(),
+    visitId: z.string().uuid(),
+    customerId: z.string().uuid(),
+    customerName: z.string(),
+    sellerName: z.string(),
+    checkinLatitude: z.number(),
+    checkinLongitude: z.number(),
+    checkinDistanceMeters: z.number(),
+    checkinTimestamp: z.string(), 
+    isOpen: z.boolean(),
+    checkoutTimestamp: z.string().nullable(),
+    durationMinutes: z.number().nullable(),
+    checkoutSummary: z.string().nullable(),
 });
 
 export type CheckinRequest = z.infer<typeof CheckinRequestSchema>;
 export type CheckoutRequest = z.infer<typeof CheckoutRequestSchema>;
 export type VisitSummaryDto = z.infer<typeof VisitSummaryDtoSchema>;
 
-export interface VisitHistoryResponse {
-  items: VisitSummaryDto[];
-  totalCount: number;
-  page: number;
-  pageSize: number;
-}
+export type VisitHistoryResponse = VisitSummaryDto[];
