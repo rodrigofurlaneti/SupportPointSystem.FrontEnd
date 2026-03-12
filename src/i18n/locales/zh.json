@@ -1,4 +1,4 @@
-{
+﻿{
   "welcome": "欢迎",
   "login_subtitle": "早上好！准备好出发了吗？",
   "cpf": "证件号 / Cpf",
@@ -35,5 +35,20 @@
   "audit_logs": "审计日志",
   "name": "姓名",
   "email": "电子邮件",
-  "phone": "电话"
+  "phone": "电话",
+  "delete_confirm_title": "您确定吗？",
+  "delete_confirm_msg": "您想永久删除吗：",
+  "delete_confirm_button": "是的，删除！",
+  "deleted_success": "删除成功！",
+  "delete_error": "删除时出错",
+  "action_undone_msg": "此操作无法撤销。",
+  "edit_success_title": "已更新！",
+  "edit_success_msg": "数据已成功保存。",
+  "logout_confirm_title": "注销登录？",
+  "logout_confirm_msg": "您需要重新输入凭据才能再次访问。",
+  "notification_title": "通知",
+  "notification_message": "您有一个开启的签到",
+  "lead_opportunities": "销售机会",
+  "new": "新",
+  "no_leads_available": "目前没有可用机会。"
 }

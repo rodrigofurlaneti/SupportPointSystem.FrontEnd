@@ -1,4 +1,4 @@
-{
+﻿{
   "welcome": "Bienvenue",
   "login_subtitle": "Bonjour ! Prêt pour aujourd'hui ?",
   "cpf": "Id / cpf",
@@ -35,5 +35,20 @@
   "audit_logs": "Logs d'audit",
   "name": "Nom",
   "email": "E-mail",
-  "phone": "Téléphone"
+  "phone": "Téléphone",
+  "delete_confirm_title": "Êtes-vous sûr ?",
+  "delete_confirm_msg": "Voulez-vous supprimer définitivement",
+  "delete_confirm_button": "Oui, supprimer !",
+  "deleted_success": "Supprimé avec succès !",
+  "delete_error": "Erreur lors de la suppression",
+  "action_undone_msg": "Cette action ne peut pas être annulée.",
+  "edit_success_title": "Mis à jour !",
+  "edit_success_msg": "Les données ont été enregistrées avec succès.",
+  "logout_confirm_title": "Se déconnecter ?",
+  "logout_confirm_msg": "Vous devrez saisir à nouveau vos identifiants.",
+  "notification_title": "Notifications",
+  "notification_message": "Vous avez um check-in ouvert",
+  "lead_opportunities": "Opportunités de leads",
+  "new": "Nouveau",
+  "no_leads_available": "Aucune opportunité disponible pour le moment."
 }

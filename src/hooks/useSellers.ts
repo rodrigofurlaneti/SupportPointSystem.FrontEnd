@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+﻿import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { sellersApi } from '../api/sellers.api';
 import type { CreateSeller } from '../schemas/seller.schema';
 
@@ -29,12 +29,15 @@ export function useCreateSeller() {
 }
 
 export function useUpdateSeller() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<CreateSeller> }) =>
-      sellersApi.update(id, data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: [SELLERS_KEY] }),
-  });
+    const qc = useQueryClient();
+    return useMutation({
+        mutationFn: ({ id, data }: { id: string; data: Partial<CreateSeller> }) =>
+            sellersApi.update(id, data),
+        onSuccess: (_, variables) => {
+            qc.invalidateQueries({ queryKey: [SELLERS_KEY] });
+            qc.invalidateQueries({ queryKey: [SELLERS_KEY, variables.id] });
+        },
+    });
 }
 
 export function useDeleteSeller() {

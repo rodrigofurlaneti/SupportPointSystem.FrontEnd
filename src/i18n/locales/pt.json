@@ -1,4 +1,4 @@
-{
+﻿{
   "welcome": "Bem-vindo",
   "login_subtitle": "Bom dia! Pronto para hoje?",
   "cpf": "CPF",
@@ -40,5 +40,29 @@
   "notification_message": "Você tem um check-in aberto",
   "lead_opportunities": "OPORTUNIDADES DE LEAD",
   "new": "Novo",
-  "no_leads_available": "Nenhuma oportunidade disponível no momento."
+  "no_leads_available": "Nenhuma oportunidade disponível no momento.",
+  "delete_confirm_title": "Você tem certeza?",
+  "delete_confirm_msg": "Deseja remover permanentemente",
+  "delete_confirm_button": "Sim, excluir!",
+  "deleted_success": "Removido com sucesso!",
+  "delete_error": "Erro ao excluir registro.",
+  "action_undone_msg": "Esta ação não poderá ser desfeita.",
+  "edit_success_title": "Atualizado!",
+  "edit_success_msg": "Os dados foram salvos com sucesso.",
+  "save_success": "Salvo com sucesso!",
+  "logout_confirm_title": "Encerrar Sessão?",
+  "logout_confirm_msg": "Você precisará de login e senha para acessar novamente.",
+  "logout_button": "Sair agora",
+  "location_error_title": "Erro de GPS",
+  "location_error_msg": "Não foi possível obter sua localização. Verifique as permissões.",
+  "location_success": "Coordenadas capturadas!",
+  "page_current": "Página Atual",
+  "page_next": "Próxima",
+  "page_prev": "Anterior",
+  "visit_details": "Detalhes da Visita",
+  "visit_report": "Relatório da Visita",
+  "seller_label": "Vendedor",
+  "customer_label": "Cliente",
+  "status_open": "Em aberto",
+  "status_closed": "Encerrada"
 }
