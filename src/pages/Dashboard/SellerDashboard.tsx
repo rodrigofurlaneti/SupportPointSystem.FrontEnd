@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -17,7 +17,8 @@ export default function SellerDashboard() {
   const { t } = useTranslation();
   const logout = useLogout();
   const { role } = useAuthStore();
-  const sellerName = useAuthStore((s) => s.userId) ?? 'Vendedor';
+  //const sellerName = useAuthStore((s) => s.userId) ?? 'Vendedor';
+  const userName = useAuthStore((s) => s.userName) ?? 'Vendedor';
 
   const { data: customers = [], isLoading } = useCustomers();
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
@@ -76,8 +77,7 @@ export default function SellerDashboard() {
 
   return (
     <div className="min-h-screen bg-check-blue text-white font-sans pb-10">
-      <Header userName={sellerName} onLogout={logout} />
-
+      <Header userName={userName} onLogout={logout} />
       <main className="p-6 grid gap-6">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4">

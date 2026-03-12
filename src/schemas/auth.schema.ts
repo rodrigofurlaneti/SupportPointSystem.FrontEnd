@@ -1,4 +1,4 @@
-import { z } from 'zod';
+﻿import { z } from 'zod';
 
 export const LoginRequestSchema = z.object({
   cpf: z.string().min(11).max(14),
@@ -6,11 +6,12 @@ export const LoginRequestSchema = z.object({
 });
 
 export const LoginResponseSchema = z.object({
-  token: z.string(),
-  userRole: z.enum(['ADMIN', 'SELLER']),
-  userId: z.string().uuid(),
-  sellerId: z.string().uuid().nullable(),
-  expiresAt: z.string().datetime(),
+    token: z.string(),
+    userRole: z.enum(['ADMIN', 'SELLER']),
+    userId: z.string().uuid(),
+    sellerId: z.string().uuid().nullable(),
+    sellerName: z.string().nullable().optional(), 
+    expiresAt: z.string().datetime(),
 });
 
 export type LoginRequest = z.infer<typeof LoginRequestSchema>;

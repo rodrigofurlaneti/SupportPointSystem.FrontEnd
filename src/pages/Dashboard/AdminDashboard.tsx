@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Users, Landmark, MapPin, ChevronDown, PlusCircle, List, BarChart3 } from 'lucide-react';
@@ -10,7 +10,8 @@ export default function AdminDashboard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const logout = useLogout();
-  const userId = useAuthStore((s) => s.userId) ?? 'Admin';
+  //const userId = useAuthStore((s) => s.userId) ?? 'Admin';
+  const userName = useAuthStore((s) => s.userName) ?? 'Administrador';
   const [openSection, setOpenSection] = useState<string | null>('sellers');
 
   const sections = [
@@ -49,7 +50,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-check-blue text-white font-sans">
-      <HeaderAdmin userName={userId} onLogout={logout} />
+      <HeaderAdmin userName={userName} onLogout={logout} />
 
       <main className="p-6 pt-12 max-w-4xl mx-auto">
         <div className="text-center mb-12">
