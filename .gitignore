@@ -51,6 +51,3 @@ capacitor.config.ts.local
 *.jks
 *.p12
 *.pem
-.env
-.env.*
-!.env.example
