@@ -32,7 +32,7 @@ export const RegisterCompanySchema = z.object({
 export const RegisterCompanyResponseSchema = z.object({
     userId: z.string().uuid(),
     companyId: z.string().uuid(),
-    message: z.string().optional() 
+    message: z.string().optional()
 });
 
 export type RegisterCompanyResponse = z.infer<typeof RegisterCompanyResponseSchema>;
