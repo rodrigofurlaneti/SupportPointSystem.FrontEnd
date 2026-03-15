@@ -50,5 +50,7 @@
   "notification_message": "您有一个开启的签到",
   "lead_opportunities": "销售机会",
   "new": "新",
-  "no_leads_available": "目前没有可用机会。"
+  "no_leads_available": "目前没有可用机会。",
+  "not_a_client": "您的公司想要合作吗？",
+  "find_out_more": "点击此处了解更多"
 }

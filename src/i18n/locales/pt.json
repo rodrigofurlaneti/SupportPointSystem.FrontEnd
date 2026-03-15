@@ -64,5 +64,7 @@
   "seller_label": "Vendedor",
   "customer_label": "Cliente",
   "status_open": "Em aberto",
-  "status_closed": "Encerrada"
+  "status_closed": "Encerrada",
+  "not_a_client": "Sua empresa quer contratar?",
+  "find_out_more": "Saiba mais aqui"
 }

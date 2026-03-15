@@ -50,5 +50,7 @@
   "notification_message": "Tienes un check-in aberto",
   "lead_opportunities": "Oportunidades de lead",
   "new": "Nuevo",
-  "no_leads_available": "No hay oportunidades disponibles por el momento."
+  "no_leads_available": "No hay oportunidades disponibles por el momento.",
+  "not_a_client": "¿Su empresa quiere contratar?",
+  "find_out_more": "Saber más aquí"
 }

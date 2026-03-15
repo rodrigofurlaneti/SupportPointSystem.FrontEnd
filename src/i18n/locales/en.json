@@ -46,5 +46,7 @@
   "notification_message": "You have an open check-in",
   "lead_opportunities": "Lead opportunities",
   "new": "New",
-  "no_leads_available": "No opportunities available at the moment."
+  "no_leads_available": "No opportunities available at the moment.",
+  "not_a_client": "Want to hire our services?",
+  "find_out_more": "Find out more"
 }
