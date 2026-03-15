@@ -9,10 +9,11 @@ export const LoginResponseSchema = z.object({
     token: z.string(),
     userRole: z.enum(['ADMIN', 'SELLER', 'COMPANYOWNER', 'COMPANY_OWNER']),
     userId: z.string().uuid(),
+    companyId: z.string().uuid().nullable().optional(),
     sellerId: z.string().uuid().nullable().optional(),
     sellerName: z.string().nullable().optional(),
     expiresAt: z.string(),
-}).passthrough(); 
+}).passthrough();
 
 export const RegisterCompanySchema = z.object({
     name: z.string().min(3, "Nome muito curto").max(100),
