@@ -81,7 +81,7 @@ export default function LoginPage() {
     const regCpfValue = watchReg('cpf', '');
     const regCnpjValue = watchReg('cnpj', '');
 
-    // Handlers de Máscara com Sincronização de Validação (Ajuste CodeRabbit)
+    // Handlers de Máscara com Sincronização de Validação
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue('cpf', formatCpf(e.target.value), { shouldValidate: true, shouldDirty: true });
     };
@@ -94,12 +94,10 @@ export default function LoginPage() {
         setRegValue('cnpj', formatCnpj(e.target.value), { shouldValidate: true, shouldDirty: true });
     };
 
-    // Submissão de Login
     const onSubmitLogin = (data: LoginRequest) => {
         login.mutate(data);
     };
 
-    // Submissão de Registro com Erro Tipado (Ajuste CodeRabbit)
     const onRegisterSubmit = async (data: RegisterCompanyRequest) => {
         try {
             await authApi.register(data);
@@ -108,13 +106,11 @@ export default function LoginPage() {
             resetRegForm();
         } catch (error: unknown) {
             let errorMessage = "Erro ao registrar empresa.";
-
             if (axios.isAxiosError(error)) {
                 errorMessage = error.response?.data?.description || errorMessage;
             } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
-
             toast.error(errorMessage);
         }
     };
@@ -140,7 +136,6 @@ export default function LoginPage() {
                 </select>
             </div>
 
-            {/* Card de Login */}
             <div className="w-full max-w-md bg-check-card p-8 rounded-[2.5rem] shadow-2xl border border-white/5 flex flex-col items-center transition-all">
                 <img src={logoImg} alt="Logo" className="w-44 mb-8" />
                 <p className="text-slate-400 mb-8 text-sm text-center">{t('login_subtitle')}</p>
@@ -165,16 +160,25 @@ export default function LoginPage() {
                     </Button>
                 </form>
 
-                {/* Chamada para Registro (SaaS Conversion) */}
-                <div className="mt-8 pt-6 border-t border-white/5 w-full text-center">
+                {/* Seção Comercial Estratégica (CORRIGIDA) */}
+                <div className="mt-8 pt-6 border-t border-white/5 w-full text-center space-y-4">
                     <p className="text-xs text-slate-400">
                         {t('not_a_client')}{' '}
+                        <a
+                            href="./findoutmore.html"
+                            className="text-white hover:text-blue-400 font-bold underline underline-offset-4 transition-all"
+                        >
+                            {t('find_out_more')}
+                        </a>
+                    </p>
+
+                    <p className="text-xs text-slate-400">
                         <button
                             type="button"
                             onClick={() => setIsRegisterModalOpen(true)}
-                            className="text-white hover:text-blue-400 font-bold underline underline-offset-4 transition-all"
+                            className="text-blue-400 hover:text-white font-bold transition-all"
                         >
-                            {t('register_your_company') || "Registre sua empresa"}
+                            {t('register_your_company') || "Registre sua empresa aqui"}
                         </button>
                     </p>
                 </div>
@@ -184,7 +188,7 @@ export default function LoginPage() {
                 </p>
             </div>
 
-            {/* Modal de Registro de Nova Empresa */}
+            {/* Modal de Registro */}
             <Transition appear show={isRegisterModalOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={() => setIsRegisterModalOpen(false)}>
                     <Transition.Child
@@ -215,12 +219,11 @@ export default function LoginPage() {
                                         {t('register_title') || "Criar nova conta administrativa"}
                                     </Dialog.Title>
                                     <p className="text-slate-400 text-sm mb-8">
-                                        {t('register_description') || "Registre sua empresa e comece a gerenciar seus pontos de suporte hoje mesmo."}
+                                        {t('register_description') || "Registre sua empresa e gerencie seus pontos de suporte."}
                                     </p>
 
                                     <form onSubmit={handleRegSubmit(onRegisterSubmit)} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                            {/* Seção Gestor */}
                                             <div className="md:col-span-2">
                                                 <h4 className="text-blue-400 text-[10px] font-bold uppercase tracking-[0.15em] border-b border-white/5 pb-2">
                                                     {t('manager_data') || "Dados do Administrador"}
@@ -232,7 +235,6 @@ export default function LoginPage() {
                                                 <Input label={t('password')} isPassword placeholder="Mínimo 8 caracteres" error={regErrors.password?.message} {...regForm('password')} />
                                             </div>
 
-                                            {/* Seção Empresa */}
                                             <div className="md:col-span-2 mt-4">
                                                 <h4 className="text-blue-400 text-[10px] font-bold uppercase tracking-[0.15em] border-b border-white/5 pb-2">
                                                     {t('company_data') || "Dados da Empresa"}
@@ -241,7 +243,7 @@ export default function LoginPage() {
                                             <Input label={t('trade_name') || "Nome Fantasia"} placeholder="Ex: FSI Suporte" error={regErrors.tradeName?.message} {...regForm('tradeName')} />
                                             <Input label={t('cnpj') || "CNPJ"} placeholder="00.000.000/0000-00" value={regCnpjValue} onChange={handleRegCnpjChange} error={regErrors.cnpj?.message} />
                                             <div className="md:col-span-2">
-                                                <Input label={t('legal_name') || "Razão Social"} placeholder="Nome empresarial completo" error={regErrors.legalName?.message} {...regForm('legalName')} />
+                                                <Input label={t('legal_name') || "Razão Social"} placeholder="Nome empresarial" error={regErrors.legalName?.message} {...regForm('legalName')} />
                                             </div>
                                         </div>
 
@@ -268,13 +270,12 @@ export default function LoginPage() {
     );
 }
 
-// React Router v7 Error Boundary (Ajuste CodeRabbit)
 export function ErrorBoundary() {
     return (
         <div className="min-h-screen bg-check-blue flex items-center justify-center p-4 text-white">
             <div className="bg-check-card border border-red-500/30 p-8 rounded-2xl text-center shadow-2xl">
                 <h1 className="text-2xl font-bold mb-4">Algo deu errado 😓</h1>
-                <p className="text-slate-400 mb-6">Não conseguimos carregar a página de autenticação. Por favor, tente recarregar.</p>
+                <p className="text-slate-400 mb-6">Não conseguimos carregar a página de autenticação.</p>
                 <Button onClick={() => window.location.reload()}>Recarregar Página</Button>
             </div>
         </div>
