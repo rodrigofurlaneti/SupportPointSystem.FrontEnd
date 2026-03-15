@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+﻿import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthGuard } from './components/AuthGuard';
 import LoginPage from './pages/Login/LoginPage';
 import SellerDashboard from './pages/Dashboard/SellerDashboard';
@@ -12,91 +12,98 @@ import AdminCustomerEdit from './pages/Admin/Customer/AdminCustomerEdit';
 import AdminVisitHistory from './pages/Admin/AdminVisitHistory';
 
 export function AppRoutes() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public */}
-        <Route path="/" element={<LoginPage />} />
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* Pública */}
+                <Route path="/" element={<LoginPage />} />
 
-        {/* Seller routes */}
-        <Route
-          path="/seller/dashboard"
-          element={
-            <AuthGuard requiredRole="SELLER">
-              <SellerDashboard />
-            </AuthGuard>
-          }
-        />
+                {/* Rotas de Vendedor */}
+                <Route
+                    path="/seller/dashboard"
+                    element={
+                        <AuthGuard requiredRole="SELLER">
+                            <SellerDashboard />
+                        </AuthGuard>
+                    }
+                />
 
-        {/* Admin routes */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminDashboard />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/admin/sellers/list"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminSellerList />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/admin/sellers/new"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminSellerCreate />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/admin/sellers/edit/:id"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminSellerEdit />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/admin/customers/list"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminCustomerList />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/admin/customers/new"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminCustomerCreate />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/admin/customers/edit/:id"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminCustomerEdit />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/admin/visits/history"
-          element={
-            <AuthGuard requiredRole="ADMIN">
-              <AdminVisitHistory />
-            </AuthGuard>
-          }
-        />
+                {/* Rotas Administrativas (Abertas para ADMIN e COMPANYOWNER) */}
+                <Route
+                    path="/admin/dashboard"
+                    element={
+                        <AuthGuard>
+                            <AdminDashboard />
+                        </AuthGuard>
+                    }
+                />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
-  );
+                <Route
+                    path="/admin/sellers/list"
+                    element={
+                        <AuthGuard>
+                            <AdminSellerList />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="/admin/sellers/new"
+                    element={
+                        <AuthGuard>
+                            <AdminSellerCreate />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="/admin/sellers/edit/:id"
+                    element={
+                        <AuthGuard>
+                            <AdminSellerEdit />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="/admin/customers/list"
+                    element={
+                        <AuthGuard>
+                            <AdminCustomerList />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="/admin/customers/new"
+                    element={
+                        <AuthGuard>
+                            <AdminCustomerCreate />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="/admin/customers/edit/:id"
+                    element={
+                        <AuthGuard>
+                            <AdminCustomerEdit />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="/admin/visits/history"
+                    element={
+                        <AuthGuard>
+                            <AdminVisitHistory />
+                        </AuthGuard>
+                    }
+                />
+
+                {/* Fallback para evitar 404 e tela branca */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
