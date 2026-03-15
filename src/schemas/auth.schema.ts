@@ -1,8 +1,8 @@
 ﻿import { z } from 'zod';
 
 export const LoginRequestSchema = z.object({
-  cpf: z.string().min(11).max(14),
-  password: z.string().min(8),
+    cpf: z.string().min(11, "CPF deve ter pelo menos 11 dígitos").max(14),
+    password: z.string().min(8, "Senha deve ter pelo menos 8 caracteres"),
 });
 
 export const LoginResponseSchema = z.object({
@@ -12,7 +12,7 @@ export const LoginResponseSchema = z.object({
     sellerId: z.string().uuid().nullable().optional(),
     sellerName: z.string().nullable().optional(),
     expiresAt: z.string(),
-}).passthrough();
+}).passthrough(); 
 
 export const RegisterCompanySchema = z.object({
     name: z.string().min(3, "Nome muito curto").max(100),

@@ -26,7 +26,10 @@ const MySwal = withReactContent(Swal);
 export default function SellerDashboard() {
     const { t } = useTranslation();
     const logout = useLogout();
+
+    // PEGANDO OS DADOS DO STORE ATUALIZADO
     const userName = useAuthStore((s) => s.userName) ?? 'Vendedor';
+    const userRole = useAuthStore((s) => s.userRole); // Adicionado para consistência
 
     const { data: customers = [], isLoading } = useCustomers();
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
@@ -35,9 +38,6 @@ export default function SellerDashboard() {
     const checkin = useCheckin();
     const checkout = useCheckout();
 
-    /**
-     * Registro de Chegada (Check-in) com SweetAlert2
-     */
     const handleCheckIn = async (customer: Customer) => {
         const actualCustomerId = customer.id || (customer as any).customerId;
 
@@ -78,9 +78,6 @@ export default function SellerDashboard() {
         }
     };
 
-    /**
-     * Registro de Saída (Check-out) com Input do SweetAlert2
-     */
     const handleCheckOut = async (customer: Customer) => {
         const actualCustomerId = customer.id || (customer as any).customerId;
 
@@ -89,7 +86,6 @@ export default function SellerDashboard() {
             return;
         }
 
-        // Usando o SweetAlert2 como um Prompt customizado
         const { value: summary, isConfirmed } = await MySwal.fire({
             title: <span className="text-white text-2xl font-black italic uppercase">Finalizar Visita</span>,
             input: 'textarea',
@@ -98,12 +94,8 @@ export default function SellerDashboard() {
             showCancelButton: true,
             confirmButtonText: 'Finalizar Check-out',
             cancelButtonText: 'Voltar',
-            confirmButtonColor: '#3b82f6', // Azul para checkout
+            confirmButtonColor: '#3b82f6',
             background: '#0f172a',
-            inputAttributes: {
-                'aria-label': 'Resumo da visita',
-                'className': 'bg-black/20 text-white rounded-xl border-white/10'
-            },
             customClass: {
                 popup: 'rounded-[2.5rem] border border-white/5',
                 input: 'text-sm text-slate-200 focus:border-check-green transition-all'
@@ -136,9 +128,14 @@ export default function SellerDashboard() {
 
             <main className="p-6 grid gap-6">
                 <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-2xl font-black italic uppercase tracking-tighter">
-                        Seus Clientes
-                    </h2>
+                    <div>
+                        <h2 className="text-2xl font-black italic uppercase tracking-tighter">
+                            Seus Clientes
+                        </h2>
+                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-1">
+                            Painel do Vendedor
+                        </p>
+                    </div>
                     {coords && (
                         <span className="text-[10px] font-bold text-check-green bg-check-green/10 px-3 py-1 rounded-full uppercase tracking-widest animate-pulse">
                             GPS Ativo

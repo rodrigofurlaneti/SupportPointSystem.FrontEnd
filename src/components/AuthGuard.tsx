@@ -13,13 +13,16 @@ export function AuthGuard({ children, requiredRole }: Props) {
     }
     if (requiredRole && userRole !== requiredRole) {
         let fallbackPath = '/';
-        if (userRole === 'ADMIN' || userRole === 'COMPANYOWNER' || userRole === 'COMPANY_OWNER') {
+        const isAdminOrOwner =
+            userRole === 'ADMIN' ||
+            userRole === 'COMPANYOWNER' ||
+            userRole === 'COMPANY_OWNER';
+        if (isAdminOrOwner) {
             fallbackPath = '/admin/dashboard';
         } else if (userRole === 'SELLER') {
             fallbackPath = '/seller/dashboard';
         }
         return <Navigate to={fallbackPath} replace />;
     }
-
     return <>{children}</>;
 }

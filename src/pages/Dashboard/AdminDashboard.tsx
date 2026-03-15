@@ -15,16 +15,20 @@ export default function AdminDashboard() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const logout = useLogout();
+
+    // Pegando userName e userRole do store atualizado
     const userName = useAuthStore((s) => s.userName) ?? 'Administrador';
+    const userRole = useAuthStore((s) => s.userRole);
+
     const [openSection, setOpenSection] = useState<string | null>('sellers');
 
-    // Efeito de Boas-vindas (Opcional, mas muito profissional)
+    // Efeito de Boas-vindas
     useEffect(() => {
         const hasWelcomed = sessionStorage.getItem('hasWelcomed');
-        if (!hasWelcomed) {
+        if (!hasWelcomed && userName) {
             MySwal.fire({
                 title: <span className="text-white text-2xl font-black italic uppercase">Bem-vindo, {userName}!</span>,
-                text: 'O sistema de gestão FSI Point está pronto para uso.',
+                text: 'O sistema de gestão CheckVisit está pronto para uso.',
                 icon: 'success',
                 timer: 3000,
                 showConfirmButton: false,
@@ -38,7 +42,6 @@ export default function AdminDashboard() {
         }
     }, [userName]);
 
-    // Função de Logout com Confirmação SweetAlert2
     const handleLogoutClick = async () => {
         const result = await MySwal.fire({
             title: <span className="text-white font-black italic uppercase">Encerrar Sessão?</span>,
@@ -63,6 +66,7 @@ export default function AdminDashboard() {
         }
     };
 
+    // Filtra as seções baseado no cargo (Opcional: ADMIN vê tudo, OWNER vê o que é dele)
     const sections = [
         {
             id: 'sellers',
@@ -99,15 +103,19 @@ export default function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-check-blue text-white font-sans">
-            {/* Passei a função de logout customizada para o header se necessário */}
             <HeaderAdmin userName={userName} onLogout={handleLogoutClick} />
 
             <main className="p-6 pt-12 max-w-4xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-black italic uppercase tracking-tighter mb-4 leading-tight">
-                        {t('admin_panel_title')}
+                        {userRole === 'ADMIN' ? 'Painel FSI Global' : t('admin_panel_title')}
                     </h2>
                     <div className="h-1.5 w-24 bg-check-green mx-auto rounded-full shadow-[0_0_15px_rgba(132,204,22,0.4)]" />
+                    {userRole && (
+                        <p className="mt-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.4em]">
+                            Acesso: {userRole.replace('_', ' ')}
+                        </p>
+                    )}
                 </div>
 
                 <div className="space-y-6">
@@ -136,15 +144,13 @@ export default function AdminDashboard() {
                                     </div>
                                 </div>
                                 <ChevronDown
-                                    className={`text-slate-600 transition-transform duration-500 ${openSection === section.id ? 'rotate-180' : ''
-                                        }`}
+                                    className={`text-slate-600 transition-transform duration-500 ${openSection === section.id ? 'rotate-180' : ''}`}
                                     size={28}
                                 />
                             </button>
 
                             <div
-                                className={`transition-all duration-500 ease-in-out overflow-hidden ${openSection === section.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                                    }`}
+                                className={`transition-all duration-500 ease-in-out overflow-hidden ${openSection === section.id ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}
                             >
                                 <div className="px-8 pb-10 pt-2 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-white/5 mt-2">
                                     {section.actions.map((action, index) => (
@@ -172,12 +178,12 @@ export default function AdminDashboard() {
                     className="w-full mt-12 flex items-center justify-center gap-3 p-6 bg-white/5 rounded-full border border-white/5 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 transition-all duration-300 group"
                 >
                     <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-black uppercase italic tracking-widest text-sm">Sair do Painel Admin</span>
+                    <span className="font-black uppercase italic tracking-widest text-sm">Sair do Painel</span>
                 </button>
 
                 <footer className="text-center mt-20 opacity-20">
                     <p className="text-[10px] font-bold uppercase tracking-[0.6em]">
-                        FSI Point System • Management Suite 2026
+                        CheckVisit System • Management Suite 2026
                     </p>
                 </footer>
             </main>

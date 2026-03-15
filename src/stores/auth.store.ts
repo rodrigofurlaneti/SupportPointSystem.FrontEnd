@@ -18,7 +18,7 @@ export const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
             token: null,
-            userRole: null,
+            userRole: null, // Inicializado como null
             userId: null,
             sellerId: null,
             userName: null,
@@ -27,7 +27,8 @@ export const useAuthStore = create<AuthState>()(
             setAuth: (data: LoginResponse) => {
                 set({
                     token: data.token,
-                    userRole: data.userRole, 
+                    // Atribuição direta: userRole (Store) recebe userRole (API)
+                    userRole: data.userRole,
                     userId: data.userId,
                     sellerId: data.sellerId,
                     userName: data.sellerName || 'Usuário',
@@ -46,7 +47,8 @@ export const useAuthStore = create<AuthState>()(
                 }),
         }),
         {
-            name: '@CheckVisit:session'
+            name: '@CheckVisit:session',
+            // Padrão é localStorage
         }
     )
 );
