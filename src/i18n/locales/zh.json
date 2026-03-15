@@ -52,5 +52,15 @@
   "new": "新",
   "no_leads_available": "目前没有可用机会。",
   "not_a_client": "您的公司想要合作吗？",
-  "find_out_more": "点击此处了解更多"
+  "find_out_more": "点击此处了解更多",
+  "register_your_company": "在这里注册您的公司",
+  "manager_data": "管理员信息",
+  "company_data": "公司信息",
+  "register_title": "开启您的 FSI Point 之旅",
+  "register_description": "只需几个步骤即可注册您的公司，开始全面、智能地管理您的支持点和访问。",
+  "trade_name": "商号/简称",
+  "legal_name": "公司法定全称",
+  "cnpj": "纳税识别号 / CNPJ",
+  "create_account": "完成注册",
+  "register_success_msg": "公司及管理员注册成功！"
 }

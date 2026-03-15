@@ -66,5 +66,15 @@
   "status_open": "Em aberto",
   "status_closed": "Encerrada",
   "not_a_client": "Sua empresa quer contratar?",
-  "find_out_more": "Saiba mais aqui"
+  "find_out_more": "Saiba mais aqui",
+  "register_your_company": "Registre sua empresa aqui",
+  "manager_data": "Dados do Administrador",
+  "company_data": "Dados da Empresa",
+  "register_title": "Comece sua jornada com o FSI Point",
+  "register_description": "Registre sua empresa em poucos passos e comece a gerenciar seus pontos de suporte e visitas com total controle e inteligência.",
+  "trade_name": "Nome Fantasia",
+  "legal_name": "Razão Social",
+  "cnpj": "CNPJ",
+  "create_account": "Finalizar Cadastro",
+  "register_success_msg": "Empresa e administrador registrados com sucesso!"
 }

@@ -1,24 +1,21 @@
 ﻿import apiClient from './client';
 import {
-    LoginResponseSchema, RegisterCompanyResponseSchema,
-    type RegisterCompanyResponse, type RegisterCompanyRequest, type LoginRequest, type LoginResponse
+    LoginResponseSchema,
+    RegisterCompanyResponseSchema,
+    type RegisterCompanyResponse,
+    type RegisterCompanyRequest,
+    type LoginRequest,
+    type LoginResponse
 } from '../schemas/auth.schema';
 
 export const authApi = {
     login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-        const response = await apiClient.post('api/auth/login', {
-            cpf: credentials.cpf.replace(/\D/g, ''),
-            password: credentials.password,
-        });
+        const response = await apiClient.post('api/auth/login', credentials);
         return LoginResponseSchema.parse(response.data);
     },
 
     register: async (data: RegisterCompanyRequest): Promise<RegisterCompanyResponse> => {
-        const response = await apiClient.post('api/auth/register', {
-            ...data,
-            cpf: data.cpf.replace(/\D/g, ''),
-            cnpj: data.cnpj.replace(/\D/g, '')
-        });
+        const response = await apiClient.post('api/auth/register', data);
         return RegisterCompanyResponseSchema.parse(response.data);
     }
 };

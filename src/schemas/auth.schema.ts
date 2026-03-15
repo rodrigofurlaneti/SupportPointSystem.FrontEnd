@@ -7,27 +7,32 @@ export const LoginRequestSchema = z.object({
 
 export const LoginResponseSchema = z.object({
     token: z.string(),
-    userRole: z.enum(['ADMIN', 'SELLER']),
+    userRole: z.enum(['ADMIN', 'SELLER', 'COMPANY_OWNER']),
     userId: z.string().uuid(),
-    sellerId: z.string().uuid().nullable(),
-    sellerName: z.string().nullable().optional(), 
+    sellerId: z.string().uuid().nullable().optional(), 
+    sellerName: z.string().nullable().optional(),
     expiresAt: z.string().datetime(),
-});
+}).passthrough();
 
 export const RegisterCompanySchema = z.object({
     name: z.string().min(3, "Nome muito curto").max(100),
-    cpf: z.string().min(11, "CPF inválido").max(14),
+    cpf: z.string()
+        .min(11, "CPF inválido")
+        .max(14)
+        .transform(val => val.replace(/\D/g, '')),
     password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
     tradeName: z.string().min(1, "Nome fantasia obrigatório"),
     legalName: z.string().min(1, "Razão social obrigatória"),
-    cnpj: z.string().min(14, "CNPJ inválido").max(18),
+    cnpj: z.string()
+        .min(14, "CNPJ inválido")
+        .max(18)
+        .transform(val => val.replace(/\D/g, '')),
 });
 
 export const RegisterCompanyResponseSchema = z.object({
     userId: z.string().uuid(),
     companyId: z.string().uuid(),
-    tradeName: z.string(),
-    message: z.string().optional() // Caso seu backend envie uma mensagem de sucesso
+    message: z.string().optional()
 });
 
 export type RegisterCompanyResponse = z.infer<typeof RegisterCompanyResponseSchema>;
