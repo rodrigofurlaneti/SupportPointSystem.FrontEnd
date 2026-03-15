@@ -23,6 +23,14 @@ export const RegisterCompanySchema = z.object({
     cnpj: z.string().min(14, "CNPJ inválido").max(18),
 });
 
+export const RegisterCompanyResponseSchema = z.object({
+    userId: z.string().uuid(),
+    companyId: z.string().uuid(),
+    tradeName: z.string(),
+    message: z.string().optional() // Caso seu backend envie uma mensagem de sucesso
+});
+
+export type RegisterCompanyResponse = z.infer<typeof RegisterCompanyResponseSchema>;
 export type RegisterCompanyRequest = z.infer<typeof RegisterCompanySchema>;
 export type LoginRequest = z.infer<typeof LoginRequestSchema>;
 export type LoginResponse = z.infer<typeof LoginResponseSchema>;

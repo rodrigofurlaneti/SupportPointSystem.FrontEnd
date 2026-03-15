@@ -4,18 +4,28 @@ import { useTranslation } from 'react-i18next';
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { toast } from 'sonner';
+import axios from 'axios';
+
+// Schemas e Tipos
 import {
     LoginRequestSchema,
     RegisterCompanySchema,
     type LoginRequest,
     type RegisterCompanyRequest
 } from '../../schemas/auth.schema';
+
+// Hooks e API
 import { useLogin } from '../../hooks/useAuth';
 import { authApi } from '../../api/auth.api';
+
+// Componentes
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+
+// Assets
 import logoImg from '../../assets/logotipo.png';
 
+// Funções de Auxiliares de Formatação (Máscaras)
 function formatCpf(value: string): string {
     const digits = value.replace(/\D/g, '').slice(0, 11);
     return digits
@@ -32,6 +42,12 @@ function formatCnpj(value: string): string {
         .replace(/\.(\d{3})(\d)/, '.$1/$2')
         .replace(/(\d{4})(\d)/, '$1-$2');
 }
+
+// React Router v7 Meta Tags
+export const meta = () => [
+    { title: "Login | FSI Point System" },
+    { name: "description", content: "Acesse o sistema de gerenciamento de pontos de suporte FSI." },
+];
 
 export default function LoginPage() {
     const { t, i18n } = useTranslation();
@@ -65,17 +81,17 @@ export default function LoginPage() {
     const regCpfValue = watchReg('cpf', '');
     const regCnpjValue = watchReg('cnpj', '');
 
-    // Handlers de Máscara
+    // Handlers de Máscara com Sincronização de Validação (Ajuste CodeRabbit)
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue('cpf', formatCpf(e.target.value));
+        setValue('cpf', formatCpf(e.target.value), { shouldValidate: true, shouldDirty: true });
     };
 
     const handleRegCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setRegValue('cpf', formatCpf(e.target.value));
+        setRegValue('cpf', formatCpf(e.target.value), { shouldValidate: true, shouldDirty: true });
     };
 
     const handleRegCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setRegValue('cnpj', formatCnpj(e.target.value));
+        setRegValue('cnpj', formatCnpj(e.target.value), { shouldValidate: true, shouldDirty: true });
     };
 
     // Submissão de Login
@@ -83,15 +99,22 @@ export default function LoginPage() {
         login.mutate(data);
     };
 
-    // Submissão de Registro
+    // Submissão de Registro com Erro Tipado (Ajuste CodeRabbit)
     const onRegisterSubmit = async (data: RegisterCompanyRequest) => {
         try {
             await authApi.register(data);
             toast.success(t('register_success_msg') || "Empresa registrada com sucesso!");
             setIsRegisterModalOpen(false);
             resetRegForm();
-        } catch (error: any) {
-            const errorMessage = error.response?.data?.description || "Erro ao registrar empresa.";
+        } catch (error: unknown) {
+            let errorMessage = "Erro ao registrar empresa.";
+
+            if (axios.isAxiosError(error)) {
+                errorMessage = error.response?.data?.description || errorMessage;
+            } else if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
             toast.error(errorMessage);
         }
     };
@@ -241,6 +264,19 @@ export default function LoginPage() {
                     </div>
                 </Dialog>
             </Transition>
+        </div>
+    );
+}
+
+// React Router v7 Error Boundary (Ajuste CodeRabbit)
+export function ErrorBoundary() {
+    return (
+        <div className="min-h-screen bg-check-blue flex items-center justify-center p-4 text-white">
+            <div className="bg-check-card border border-red-500/30 p-8 rounded-2xl text-center shadow-2xl">
+                <h1 className="text-2xl font-bold mb-4">Algo deu errado 😓</h1>
+                <p className="text-slate-400 mb-6">Não conseguimos carregar a página de autenticação. Por favor, tente recarregar.</p>
+                <Button onClick={() => window.location.reload()}>Recarregar Página</Button>
+            </div>
         </div>
     );
 }
