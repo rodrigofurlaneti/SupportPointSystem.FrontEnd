@@ -53,5 +53,14 @@
   "no_leads_available": "Aucune opportunité disponible pour le moment.",
   "not_a_client": "Votre entreprise souhaite recruter ?",
   "find_out_more": "En savoir plus ici",
-  "register_your_company": "Enregistrer votre entreprise"
+  "register_your_company": "Enregistrez votre entreprise ici",
+  "manager_data": "Coordonnées de l'administrateur",
+  "company_data": "Informations sur l'entreprise",
+  "register_title": "Commencez votre voyage avec FSI Point",
+  "register_description": "Enregistrez votre entreprise en quelques étapes et commencez à gérer vos points de support et vos visites avec un contrôle total.",
+  "trade_name": "Nom commercial",
+  "legal_name": "Raison sociale",
+  "cnpj": "CNPJ / ID Fiscal",
+  "create_account": "Finaliser l'inscription",
+  "register_success_msg": "Entreprise et administrateur enregistrés avec succès !"
 }

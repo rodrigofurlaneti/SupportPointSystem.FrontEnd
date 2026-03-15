@@ -53,5 +53,14 @@
   "no_leads_available": "No hay oportunidades disponibles por el momento.",
   "not_a_client": "¿Su empresa quiere contratar?",
   "find_out_more": "Saber más aquí",
-  "register_your_company": "Registra tu empresa"
+  "manager_data": "Datos del Administrador",
+  "company_data": "Datos de la Empresa",
+  "register_title": "Comience su jornada con FSI Point",
+  "register_description": "Registre su empresa en pocos pasos y comience a gestionar sus puntos de soporte y visitas con total control e inteligencia.",
+  "trade_name": "Nombre Fantasía",
+  "legal_name": "Razón Social",
+  "cnpj": "CNPJ / Identificación Fiscal",
+  "create_account": "Finalizar Registro",
+  "register_your_company": "Registre su empresa aquí",
+  "register_success_msg": "¡Empresa y administrador registrados con éxito!"
 }

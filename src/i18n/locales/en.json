@@ -49,5 +49,14 @@
   "no_leads_available": "No opportunities available at the moment.",
   "not_a_client": "Want to hire our services?",
   "find_out_more": "Find out more",
-  "register_your_company": "Register your company"
+  "manager_data": "Administrator Details",
+  "company_data": "Company Information",
+  "register_title": "Start your journey with FSI Point",
+  "register_description": "Register your company in just a few steps and start managing your support points and visits with full control and intelligence.",
+  "trade_name": "Trade Name",
+  "legal_name": "Legal Name",
+  "cnpj": "CNPJ / Tax ID",
+  "create_account": "Finalize Registration",
+  "register_your_company": "Register your company here",
+  "register_success_msg": "Company and administrator registered successfully!"
 }
