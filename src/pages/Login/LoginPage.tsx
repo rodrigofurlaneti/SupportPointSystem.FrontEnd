@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 // Schemas e Tipos
@@ -164,12 +165,9 @@ export default function LoginPage() {
                 <div className="mt-8 pt-6 border-t border-white/5 w-full text-center space-y-4">
                     <p className="text-xs text-slate-400">
                         {t('not_a_client')}{' '}
-                        <a
-                            href="./findoutmore.html"
-                            className="text-white hover:text-blue-400 font-bold underline underline-offset-4 transition-all"
-                        >
+                        <Link to="/find-out-more" className="text-white hover:text-blue-400 font-bold underline underline-offset-4 transition-all">
                             {t('find_out_more')}
-                        </a>
+                        </Link>
                     </p>
 
                     <p className="text-xs text-slate-400">
