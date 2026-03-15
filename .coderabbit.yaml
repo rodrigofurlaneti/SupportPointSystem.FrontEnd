@@ -1,0 +1,43 @@
+﻿# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: "en-US"
+reviews:
+  profile: "assertive"
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+  path_instructions:
+    - path: "src/components/**"
+      instructions: |
+        - Enforce Functional Components with TypeScript interfaces for Props.
+        - Check for accessibility (aria-labels) especially since Headless UI is used.
+        - Monitor for "Prop Drilling": suggest Zustand or Context if depth is > 3.
+        - Ensure Tailwind classes are organized and not excessively repetitive.
+
+    - path: "src/hooks/**"
+      instructions: |
+        - Ensure custom hooks follow the 'use' prefix naming convention.
+        - Check for proper dependency arrays in useEffect, useMemo, and useCallback.
+        - Suggest using React Query (TanStack Query) for data fetching logic instead of manual useEffects.
+
+    - path: "src/store/**"
+      instructions: |
+        - Validate Zustand store definitions: keep them small and specialized.
+        - Ensure state is updated immutably.
+        - Check for proper TypeScript typing for actions and selectors.
+
+    - path: "src/services/**"
+      instructions: |
+        - Check Axios implementation: ensure interceptors handle JWT (jwt-decode) and errors globally.
+        - Validate that API responses are typed with TypeScript interfaces or Zod schemas.
+
+    - path: "src/pages/**"
+      instructions: |
+        - Ensure proper use of React Router v7 components and loaders.
+        - Check for SEO best practices and page-level error boundaries.
+
+    - path: "**/*.{ts,tsx}"
+      instructions: |
+        - Prohibit the use of 'any' type. Force specific interfaces or generics.
+        - Check for 'Console.log' statements that should be removed.
+        - Suggest Zod for runtime schema validation on form inputs and API data.
