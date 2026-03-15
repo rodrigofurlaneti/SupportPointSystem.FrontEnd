@@ -32,8 +32,7 @@ export const RegisterCompanySchema = z.object({
 export const RegisterCompanyResponseSchema = z.object({
     userId: z.string().uuid(),
     companyId: z.string().uuid(),
-    tradeName: z.string(),
-    message: z.string().optional() // Caso seu backend envie uma mensagem de sucesso
+    message: z.string().optional() 
 });
 
 export type RegisterCompanyResponse = z.infer<typeof RegisterCompanyResponseSchema>;
