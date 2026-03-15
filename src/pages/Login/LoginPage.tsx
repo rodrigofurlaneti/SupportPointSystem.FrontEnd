@@ -44,7 +44,6 @@ function formatCnpj(value: string): string {
         .replace(/(\d{4})(\d)/, '$1-$2');
 }
 
-// React Router v7 Meta Tags
 export const meta = () => [
     { title: "Login | FSI Point System" },
     { name: "description", content: "Acesse o sistema de gerenciamento de pontos de suporte FSI." },
@@ -55,7 +54,6 @@ export default function LoginPage() {
     const login = useLogin();
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
-    // Form de Login
     const {
         register,
         handleSubmit,
@@ -66,7 +64,6 @@ export default function LoginPage() {
         resolver: zodResolver(LoginRequestSchema),
     });
 
-    // Form de Registro de Empresa
     const {
         register: regForm,
         handleSubmit: handleRegSubmit,
@@ -82,7 +79,6 @@ export default function LoginPage() {
     const regCpfValue = watchReg('cpf', '');
     const regCnpjValue = watchReg('cnpj', '');
 
-    // Handlers de Máscara com Sincronização de Validação
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue('cpf', formatCpf(e.target.value), { shouldValidate: true, shouldDirty: true });
     };
@@ -96,12 +92,18 @@ export default function LoginPage() {
     };
 
     const onSubmitLogin = (data: LoginRequest) => {
-        login.mutate(data);
+        login.mutate({ ...data, cpf: data.cpf.replace(/\D/g, '') });
     };
 
     const onRegisterSubmit = async (data: RegisterCompanyRequest) => {
         try {
-            await authApi.register(data);
+            const cleanData = {
+                ...data,
+                cpf: data.cpf.replace(/\D/g, ''),
+                cnpj: data.cnpj.replace(/\D/g, '')
+            };
+
+            await authApi.register(cleanData);
             toast.success(t('register_success_msg') || "Empresa registrada com sucesso!");
             setIsRegisterModalOpen(false);
             resetRegForm();
@@ -118,7 +120,6 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen bg-check-blue flex items-center justify-center p-4 text-white relative">
-
             {/* Seletor de Idioma */}
             <div className="absolute top-6 right-6 flex items-center gap-2">
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
@@ -137,7 +138,7 @@ export default function LoginPage() {
                 </select>
             </div>
 
-            <div className="w-full max-w-md bg-check-card p-8 rounded-[2.5rem] shadow-2xl border border-white/5 flex flex-col items-center transition-all">
+            <div className="w-full max-w-md bg-check-card p-8 rounded-[2.5rem] shadow-2xl border border-white/5 flex flex-col items-center">
                 <img src={logoImg} alt="Logo" className="w-44 mb-8" />
                 <p className="text-slate-400 mb-8 text-sm text-center">{t('login_subtitle')}</p>
 
@@ -161,71 +162,41 @@ export default function LoginPage() {
                     </Button>
                 </form>
 
-                {/* Seção Comercial Estratégica (CORRIGIDA) */}
                 <div className="mt-8 pt-6 border-t border-white/5 w-full text-center space-y-4">
                     <p className="text-xs text-slate-400">
                         {t('not_a_client')}{' '}
-                        <Link to="/find-out-more" className="text-white hover:text-blue-400 font-bold underline underline-offset-4 transition-all">
+                        <Link to="/find-out-more" className="text-white hover:text-blue-400 font-bold underline transition-all">
                             {t('find_out_more')}
                         </Link>
                     </p>
-
-                    <p className="text-xs text-slate-400">
-                        <button
-                            type="button"
-                            onClick={() => setIsRegisterModalOpen(true)}
-                            className="text-blue-400 hover:text-white font-bold transition-all"
-                        >
-                            {t('register_your_company') || "Registre sua empresa aqui"}
-                        </button>
-                    </p>
+                    <button
+                        type="button"
+                        onClick={() => setIsRegisterModalOpen(true)}
+                        className="text-blue-400 hover:text-white font-bold transition-all text-xs"
+                    >
+                        {t('register_your_company') || "Registre sua empresa aqui"}
+                    </button>
                 </div>
-
-                <p className="mt-8 text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">
-                    FSI Point System • 2026
-                </p>
             </div>
 
             {/* Modal de Registro */}
             <Transition appear show={isRegisterModalOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={() => setIsRegisterModalOpen(false)}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                    >
+                    <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
                         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
-                            <Transition.Child
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 scale-95"
-                                enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
-                            >
-                                <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-[2rem] bg-check-card border border-white/10 p-10 text-left align-middle shadow-2xl transition-all text-white">
-                                    <Dialog.Title as="h3" className="text-2xl font-bold leading-6 mb-2">
-                                        {t('register_title') || "Criar nova conta administrativa"}
-                                    </Dialog.Title>
-                                    <p className="text-slate-400 text-sm mb-8">
-                                        {t('register_description') || "Registre sua empresa e gerencie seus pontos de suporte."}
-                                    </p>
+                        <div className="flex min-h-full items-center justify-center p-4">
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+                                <Dialog.Panel className="w-full max-w-2xl transform rounded-[2rem] bg-check-card border border-white/10 p-10 shadow-2xl transition-all text-white">
+                                    <Dialog.Title as="h3" className="text-2xl font-bold mb-2">{t('register_title')}</Dialog.Title>
+                                    <p className="text-slate-400 text-sm mb-8">{t('register_description')}</p>
 
                                     <form onSubmit={handleRegSubmit(onRegisterSubmit)} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div className="md:col-span-2">
-                                                <h4 className="text-blue-400 text-[10px] font-bold uppercase tracking-[0.15em] border-b border-white/5 pb-2">
-                                                    {t('manager_data') || "Dados do Administrador"}
-                                                </h4>
+                                                <h4 className="text-blue-400 text-[10px] font-bold uppercase tracking-[0.15em] border-b border-white/5 pb-2">{t('manager_data')}</h4>
                                             </div>
                                             <Input label={t('name')} placeholder="Nome completo" error={regErrors.name?.message} {...regForm('name')} />
                                             <Input label={t('cpf')} placeholder="000.000.000-00" value={regCpfValue} onChange={handleRegCpfChange} error={regErrors.cpf?.message} />
@@ -234,26 +205,39 @@ export default function LoginPage() {
                                             </div>
 
                                             <div className="md:col-span-2 mt-4">
-                                                <h4 className="text-blue-400 text-[10px] font-bold uppercase tracking-[0.15em] border-b border-white/5 pb-2">
-                                                    {t('company_data') || "Dados da Empresa"}
-                                                </h4>
+                                                <h4 className="text-blue-400 text-[10px] font-bold uppercase tracking-[0.15em] border-b border-white/5 pb-2">{t('company_data')}</h4>
                                             </div>
-                                            <Input label={t('trade_name') || "Nome Fantasia"} placeholder="Ex: FSI Suporte" error={regErrors.tradeName?.message} {...regForm('tradeName')} />
-                                            <Input label={t('cnpj') || "CNPJ"} placeholder="00.000.000/0000-00" value={regCnpjValue} onChange={handleRegCnpjChange} error={regErrors.cnpj?.message} />
+
+                                            <Input
+                                                label={t('trade_name') || "Nome Fantasia"}
+                                                placeholder="Ex: FSI Suporte"
+                                                error={regErrors.tradeName?.message}
+                                                {...regForm('tradeName')}
+                                                onChange={(e) => setRegValue('tradeName', e.target.value, { shouldValidate: true })}
+                                            />
+
+                                            <Input
+                                                label={t('cnpj') || "CNPJ"}
+                                                placeholder="00.000.000/0000-00"
+                                                value={regCnpjValue}
+                                                onChange={handleRegCnpjChange}
+                                                error={regErrors.cnpj?.message}
+                                            />
+
                                             <div className="md:col-span-2">
-                                                <Input label={t('legal_name') || "Razão Social"} placeholder="Nome empresarial" error={regErrors.legalName?.message} {...regForm('legalName')} />
+                                                <Input
+                                                    label={t('legal_name') || "Razão Social"}
+                                                    placeholder="Nome empresarial"
+                                                    error={regErrors.legalName?.message}
+                                                    {...regForm('legalName')}
+                                                    onChange={(e) => setRegValue('legalName', e.target.value, { shouldValidate: true })}
+                                                />
                                             </div>
                                         </div>
 
                                         <div className="mt-8 flex flex-col md:flex-row gap-3">
-                                            <Button type="submit" loading={regLoading}>
-                                                {t('create_account') || "Finalizar Cadastro"}
-                                            </Button>
-                                            <button
-                                                type="button"
-                                                className="px-8 py-3 text-xs font-bold text-slate-500 hover:text-white transition-all uppercase tracking-widest"
-                                                onClick={() => setIsRegisterModalOpen(false)}
-                                            >
+                                            <Button type="submit" loading={regLoading}>{t('create_account')}</Button>
+                                            <button type="button" className="px-8 py-3 text-xs font-bold text-slate-500 hover:text-white transition-all uppercase" onClick={() => setIsRegisterModalOpen(false)}>
                                                 {t('cancel_button')}
                                             </button>
                                         </div>
@@ -273,7 +257,6 @@ export function ErrorBoundary() {
         <div className="min-h-screen bg-check-blue flex items-center justify-center p-4 text-white">
             <div className="bg-check-card border border-red-500/30 p-8 rounded-2xl text-center shadow-2xl">
                 <h1 className="text-2xl font-bold mb-4">Algo deu errado 😓</h1>
-                <p className="text-slate-400 mb-6">Não conseguimos carregar a página de autenticação.</p>
                 <Button onClick={() => window.location.reload()}>Recarregar Página</Button>
             </div>
         </div>

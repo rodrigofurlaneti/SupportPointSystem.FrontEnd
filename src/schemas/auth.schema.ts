@@ -16,11 +16,17 @@ export const LoginResponseSchema = z.object({
 
 export const RegisterCompanySchema = z.object({
     name: z.string().min(3, "Nome muito curto").max(100),
-    cpf: z.string().min(11, "CPF inválido").max(14),
+    cpf: z.string()
+        .min(11, "CPF inválido")
+        .max(14)
+        .transform(val => val.replace(/\D/g, '')),
     password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
     tradeName: z.string().min(1, "Nome fantasia obrigatório"),
     legalName: z.string().min(1, "Razão social obrigatória"),
-    cnpj: z.string().min(14, "CNPJ inválido").max(18),
+    cnpj: z.string()
+        .min(14, "CNPJ inválido")
+        .max(18)
+        .transform(val => val.replace(/\D/g, '')),
 });
 
 export const RegisterCompanyResponseSchema = z.object({
