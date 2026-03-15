@@ -5,10 +5,11 @@ import { jwtDecode } from 'jwt-decode';
 
 interface AuthState {
     token: string | null;
-    role: 'ADMIN' | 'SELLER' | null;
+    // CORREÇÃO AQUI: Adicionado 'COMPANYOWNER' ao tipo
+    role: 'ADMIN' | 'SELLER' | 'COMPANYOWNER' | null;
     userId: string | null;
     sellerId: string | null;
-    userName: string | null; 
+    userName: string | null;
     isAuth: boolean;
     setAuth: (data: LoginResponse) => void;
     logout: () => void;
@@ -24,13 +25,12 @@ export const useAuthStore = create<AuthState>()(
             userName: null,
             isAuth: false,
             setAuth: (data) => {
-                const decoded: any = jwtDecode(data.token);
                 set({
                     token: data.token,
-                    role: data.userRole,
+                    role: data.userRole, 
                     userId: data.userId,
                     sellerId: data.sellerId,
-                    userName: decoded.sellerName || 'Usuário', // Pega o nome de dentro do JWT
+                    userName: data.sellerName || 'Usuário',
                     isAuth: true,
                 });
             },
@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthState>()(
                     role: null,
                     userId: null,
                     sellerId: null,
-                    userName: null, 
+                    userName: null,
                     isAuth: false,
                 }),
         }),
