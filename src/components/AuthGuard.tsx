@@ -1,26 +1,25 @@
-import { Navigate } from 'react-router-dom';
+﻿import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/auth.store';
 
 interface Props {
-  children: React.ReactNode;
-  requiredRole?: 'ADMIN' | 'SELLER';
+    children: React.ReactNode;
+    requiredRole?: 'ADMIN' | 'SELLER' | 'COMPANYOWNER' | 'COMPANY_OWNER';
 }
 
 export function AuthGuard({ children, requiredRole }: Props) {
-  const { isAuth, role } = useAuthStore();
+    const { isAuth, userRole } = useAuthStore();
+    if (!isAuth) {
+        return <Navigate to="/" replace />;
+    }
+    if (requiredRole && userRole !== requiredRole) {
+        let fallbackPath = '/';
+        if (userRole === 'ADMIN' || userRole === 'COMPANYOWNER' || userRole === 'COMPANY_OWNER') {
+            fallbackPath = '/admin/dashboard';
+        } else if (userRole === 'SELLER') {
+            fallbackPath = '/seller/dashboard';
+        }
+        return <Navigate to={fallbackPath} replace />;
+    }
 
-  if (!isAuth) {
-    return <Navigate to="/" replace />;
-  }
-
-  if (requiredRole && role !== requiredRole) {
-    return (
-      <Navigate
-        to={role === 'ADMIN' ? '/admin/dashboard' : '/seller/dashboard'}
-        replace
-      />
-    );
-  }
-
-  return <>{children}</>;
+    return <>{children}</>;
 }

@@ -1,4 +1,5 @@
-﻿import apiClient from './client';
+﻿import { z } from 'zod'; // ADICIONE ESTA LINHA NO TOPO
+import apiClient from './client';
 import {
     LoginResponseSchema,
     RegisterCompanyResponseSchema,
@@ -10,8 +11,15 @@ import {
 
 export const authApi = {
     login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-        const response = await apiClient.post('api/auth/login', credentials);
-        return LoginResponseSchema.parse(response.data);
+        try {
+            const response = await apiClient.post('api/auth/login', credentials);
+            return LoginResponseSchema.parse(response.data);
+        } catch (error: any) {
+            if (error instanceof z.ZodError) {
+                console.error("ERRO DE VALIDAÇÃO DO ZOD:", error.errors);
+            }
+            throw error;
+        }
     },
 
     register: async (data: RegisterCompanyRequest): Promise<RegisterCompanyResponse> => {

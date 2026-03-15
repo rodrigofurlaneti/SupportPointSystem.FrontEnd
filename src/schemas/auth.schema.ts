@@ -7,11 +7,11 @@ export const LoginRequestSchema = z.object({
 
 export const LoginResponseSchema = z.object({
     token: z.string(),
-    userRole: z.enum(['ADMIN', 'SELLER', 'COMPANY_OWNER']),
+    userRole: z.enum(['ADMIN', 'SELLER', 'COMPANYOWNER', 'COMPANY_OWNER']),
     userId: z.string().uuid(),
-    sellerId: z.string().uuid().nullable().optional(), 
+    sellerId: z.string().uuid().nullable().optional(),
     sellerName: z.string().nullable().optional(),
-    expiresAt: z.string().datetime(),
+    expiresAt: z.string(),
 }).passthrough();
 
 export const RegisterCompanySchema = z.object({
